@@ -33,7 +33,7 @@ public class Board {
         if(!positionExists(position)){
             throw new BoardException("Error: Position not existed on the Board");
         }
-        return pieces[getRows()][getColumns()];
+        return pieces[position.getRow()][position.getColumn()];
     }
 
     public void placePiece(Piece piece,Position position) {
@@ -42,6 +42,18 @@ public class Board {
         }
         pieces[position.getRow()][position.getColumn()] = piece;
         piece.position = position;
+    }
+    public Piece removePiece(Position position){
+        if(!positionExists(position)){
+            throw new BoardException("Error: Position not existed on the Board");
+        }
+        if(piece(position)==null){
+            return null;
+        }
+        Piece aux = piece(position);
+        aux.position = null;
+        pieces[position.getRow()][position.getColumn()] = null;
+        return aux;
     }
 
     private boolean positionExists(int row,int column){
