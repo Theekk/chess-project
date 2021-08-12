@@ -28,13 +28,23 @@ public class ChessRules {
         Position start = startPosition.toPosition();
         Position last = lastPosition.toPosition();
         validateSourcePosition(start);
+        validateTargetPosition(start,last);
         Piece capturedPiece = makeMove(start,last);
         return (ChessPiece) capturedPiece;
     }
 
     private void validateSourcePosition(Position position){
         if(!board.thereIsAPiece(position)){
-            throw new ChessException("There is no piece in the position");
+            throw new ChessException("There is no piece in the position.");
+        }
+        if(!board.piece(position).isThereAnyPossibleMove()){
+            throw new ChessException("There is no possible moves for the chosen piece.");
+        }
+    }
+
+    private void validateTargetPosition(Position start,Position last){
+        if(!board.piece(start).possibleMove(last)){
+            throw new ChessException("The chosen piece can't move to target position.");
         }
     }
 
