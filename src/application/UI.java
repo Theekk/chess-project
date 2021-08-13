@@ -3,6 +3,7 @@ package application;
 import boardgame.BoardException;
 import chess.ChessPiece;
 import chess.ChessPosition;
+import chess.ChessRules;
 import chess.Color;
 
 import java.util.InputMismatchException;
@@ -45,6 +46,14 @@ public class UI {
             throw new InputMismatchException("This position not existed. Valid value (a1 to h8)");
         }
     }
+
+    public static void printMatch(ChessRules chessRules){
+        printBoard(chessRules.getPieces());
+        System.out.println();
+        System.out.println("Turn: "+chessRules.getTurn());
+        System.out.println("Waiting player: "+chessRules.getCurrentPlayer());
+    }
+
     public static void printBoard(ChessPiece[][] pieces) {
         for (int i = 0; i < pieces.length; i++) {
             System.out.print((8 - i) + " ");
