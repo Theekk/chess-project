@@ -23,6 +23,9 @@ public class Program {
                 System.out.print("Piece: ");
                 ChessPosition start = UI.readChessPosition(sc);
 
+                boolean[][] possibleMoves = chessRules.possibleMoves(start);
+                UI.clearScreen();
+                UI.printBoard(chessRules.getPieces(),possibleMoves);
                 System.out.print("move: ");
                 ChessPosition last = UI.readChessPosition(sc);
 

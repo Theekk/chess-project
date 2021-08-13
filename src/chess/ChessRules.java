@@ -23,6 +23,11 @@ public class ChessRules {
         } return posXY;
     }
 
+    public boolean[][] possibleMoves(ChessPosition startPosition){
+        Position position = startPosition.toPosition();
+        validateSourcePosition(position);
+        return board.piece(position).possibleMoves();
+    }
 
     public ChessPiece performChessMove(ChessPosition startPosition,ChessPosition lastPosition){
         Position start = startPosition.toPosition();
