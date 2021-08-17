@@ -4,6 +4,7 @@ import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.King;
+import chess.pieces.Pawn;
 import chess.pieces.Rook;
 
 import java.util.ArrayList;
@@ -97,7 +98,8 @@ public class ChessRules {
     }
 
     private Piece makeMove(Position start,Position last){
-        Piece p = board.removePiece(start);
+        ChessPiece p = (ChessPiece)board.removePiece(start);
+        p.increaseMoveCount();
         Piece capturedPiece = board.removePiece(last);
         board.placePiece(p,last);
 
@@ -109,7 +111,8 @@ public class ChessRules {
     }
 
     private void undoMove(Position start,Position last,Piece capturedPiece){
-        Piece p = board.removePiece(last);
+        ChessPiece p = (ChessPiece)board.removePiece(last);
+        p.decreaseMoveCount();
         board.placePiece(p, start);
 
         if(capturedPiece != null ){
@@ -133,7 +136,7 @@ public class ChessRules {
         throw new IllegalStateException("Tehere is no"+color+"King on the board!!!");
     }
 
-    private boolean testCheck (Color color){
+    private boolean testCheck(Color color){
         Position kingPosition = king(color).getChessPosition().toPosition();
         List<Piece> opponentPieces = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == opponent(color)).collect(Collectors.toList());
         for(Piece p: opponentPieces){
@@ -175,13 +178,30 @@ public class ChessRules {
     }
 
     private void setInitial(){
-        placeNewPiece('a',8,new Rook(board,Color.WHITE));
-        placeNewPiece('e',8,new King(board,Color.WHITE));
-        placeNewPiece('h',8,new Rook(board,Color.WHITE));
+        placeNewPiece('a',2,new Pawn(board,Color.WHITE));
+        placeNewPiece('b',2,new Pawn(board,Color.WHITE));
+        placeNewPiece('c',2,new Pawn(board,Color.WHITE));
+        placeNewPiece('d',2,new Pawn(board,Color.WHITE));
+        placeNewPiece('e',2,new Pawn(board,Color.WHITE));
+        placeNewPiece('f',2,new Pawn(board,Color.WHITE));
+        placeNewPiece('g',2,new Pawn(board,Color.WHITE));
+        placeNewPiece('h',2,new Pawn(board,Color.WHITE));
+        placeNewPiece('a',1,new Rook(board,Color.WHITE));
+        placeNewPiece('e',1,new King(board,Color.WHITE));
+        placeNewPiece('h',1,new Rook(board,Color.WHITE));
 
-        placeNewPiece('a',2,new Rook(board,Color.BLACK));
-        placeNewPiece('a',1,new King(board,Color.BLACK));
-        placeNewPiece('b',1,new Rook(board,Color.BLACK));
+
+        placeNewPiece('a',7,new Pawn(board,Color.BLACK));
+        placeNewPiece('b',7,new Pawn(board,Color.BLACK));
+        placeNewPiece('c',7,new Pawn(board,Color.BLACK));
+        placeNewPiece('d',7,new Pawn(board,Color.BLACK));
+        placeNewPiece('e',7,new Pawn(board,Color.BLACK));
+        placeNewPiece('f',7,new Pawn(board,Color.BLACK));
+        placeNewPiece('g',7,new Pawn(board,Color.BLACK));
+        placeNewPiece('h',7,new Pawn(board,Color.BLACK));
+        placeNewPiece('e',8,new Rook(board,Color.BLACK));
+        placeNewPiece('a',8,new King(board,Color.BLACK));
+        placeNewPiece('b',8,new Rook(board,Color.BLACK));
     }
 
     private void nextTurn(){
