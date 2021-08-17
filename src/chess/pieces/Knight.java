@@ -5,15 +5,15 @@ import boardgame.Position;
 import chess.ChessPiece;
 import chess.Color;
 
-public class Horse extends ChessPiece {
+public class Knight extends ChessPiece {
 
-    public Horse(Board board, Color color) {
+    public Knight(Board board, Color color) {
         super(board, color);
     }
 
     @Override
     public String toString(){
-        return"H";
+        return"N";
     }
 
     @Override
